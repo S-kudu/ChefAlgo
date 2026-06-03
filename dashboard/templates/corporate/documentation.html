@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Dokümantasyon | ChefAlgo{% endblock %}
+{% block body_class %}dashboard-page-active{% endblock %}
+
+{% block content %}
+{% include 'corporate/_corporate_styles.html' %}
+
+<section class="corp-page">
+    <div class="container corp-container">
+
+        <div class="corp-hero">
+            <div class="corp-hero-left">
+                <span class="corp-badge">
+                    <i class="bi bi-file-earmark-text"></i>
+                    Dokümantasyon
+                </span>
+
+                <h1>Proje Dokümantasyonu</h1>
+
+                <p>
+                    ChefAlgo, Django altyapısı kullanılarak geliştirilmiş bir yemek tarifi ve karar destek sistemi
+                    projesidir. Sistem; tarif listeleme, kategori filtreleme, favori yönetimi ve malzemeye göre
+                    tarif önerisi özelliklerini içerir.
+                </p>
+            </div>
+
+            <div class="corp-hero-right">
+                <div class="corp-main-icon">
+                    <i class="bi bi-journal-code"></i>
+                </div>
+
+                <h3>Modüler Yapı</h3>
+
+                <p>
+                    Sayfalar, view fonksiyonları ve template yapısı düzenli bir mimariyle ayrılmıştır.
+                </p>
+            </div>
+        </div>
+
+        <div class="corp-section">
+            <div class="corp-section-header">
+                <span>Dokümantasyon</span>
+                <h2>Sistem Sayfaları</h2>
+            </div>
+
+            <div class="corp-card-grid four">
+                <div class="corp-card">
+                    <div class="corp-card-number">01</div>
+                    <div class="corp-card-icon">
+                        <i class="bi bi-house"></i>
+                    </div>
+
+                    <h4>Ana Sayfa</h4>
+
+                    <p>
+                        Projenin amacı, genel özellikleri ve kullanıcıya sunduğu avantajlar tanıtılır.
+                    </p>
+                </div>
+
+                <div class="corp-card">
+                    <div class="corp-card-number">02</div>
+                    <div class="corp-card-icon">
+                        <i class="bi bi-speedometer2"></i>
+                    </div>
+
+                    <h4>Dashboard</h4>
+
+                    <p>
+                        Tarifler kategoriye göre listelenir. Kullanıcı istediği kategoriye göre filtreleme yapabilir.
+                    </p>
+                </div>
+
+                <div class="corp-card">
+                    <div class="corp-card-number">03</div>
+                    <div class="corp-card-icon">
+                        <i class="bi bi-stars"></i>
+                    </div>
+
+                    <h4>ChefAlgo AI</h4>
+
+                    <p>
+                        Kullanıcının yazdığı malzemeler sistemdeki tariflerle karşılaştırılır ve uyum yüzdesi hesaplanır.
+                    </p>
+                </div>
+
+                <div class="corp-card">
+                    <div class="corp-card-number">04</div>
+                    <div class="corp-card-icon">
+                        <i class="bi bi-heart"></i>
+                    </div>
+
+                    <h4>Favorilerim</h4>
+
+                    <p>
+                        Giriş yapan kullanıcı, beğendiği tarifleri favorilerine ekleyebilir ve daha sonra görüntüleyebilir.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

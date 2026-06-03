@@ -1,0 +1,634 @@
+{% extends 'base.html' %}
+{% block title %}{{ recipe.title }} | ChefAlgo{% endblock %}
+{% block body_class %}dashboard-page-active{% endblock %}
+
+{% block content %}
+<section class="recipe-detail-page">
+    {% if not user.is_authenticated %}
+<div class="login-warning-box">
+    <div class="login-warning-content">
+
+        <div class="lock-icon">
+            <i class="bi bi-lock-fill"></i>
+        </div>
+
+        <h2>Tarif İçeriği Kilitli</h2>
+
+        <p>
+            Bu tarifin detaylarını görüntülemek için giriş yapmanız gerekiyor.
+            ChefAlgo’nun profesyonel tarif sistemine erişmek için hesabınıza giriş yapın.
+        </p>
+
+        <div class="warning-buttons">
+            <a href="{% url 'login' %}" class="login-btn-pro">
+                <i class="bi bi-box-arrow-in-right"></i>
+                Giriş Yap
+            </a>
+
+            <a href="{% url 'register' %}" class="register-btn-pro">
+                Hesap Oluştur
+            </a>
+        </div>
+
+    </div>
+</div>
+{% endif %}
+    <div class="container {% if not user.is_authenticated %}blur-content{% endif %}">
+
+        <div class="premium-hero">
+            <div class="premium-hero-image">
+                <img src="{{ recipe.image }}" alt="{{ recipe.title }}" onerror="this.src='https://images.unsplash.com/photo-1495521821757-a1efb6729352?auto=format&fit=crop&w=900&q=80';">
+            </div>
+
+            <div class="premium-hero-content">
+                <a href="{% url 'dashboard' %}?category={{ recipe.category|urlencode }}" class="back-link">
+                    <i class="bi bi-arrow-left"></i> {{ recipe.category }}
+                </a>
+
+                <span class="premium-badge">
+                    <i class="bi bi-stars"></i> ChefAlgo önerisi
+                </span>
+
+                <h1>{{ recipe.title }}</h1>
+                <p>{{ recipe.description }}</p>
+
+                <div class="quick-stats">
+                    <div><i class="bi bi-clock"></i><strong>{{ recipe.time }}</strong><span>Toplam Süre</span></div>
+                    <div><i class="bi bi-people"></i><strong>{{ recipe.servings }}</strong><span>Porsiyon</span></div>
+                    <div><i class="bi bi-bar-chart"></i><strong>{{ recipe.difficulty }}</strong><span>Zorluk</span></div>
+                    <div><i class="bi bi-heart-pulse"></i><strong>{{ recipe.calories }}</strong><span>Kalori</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-layout">
+            <aside class="side-card">
+                <h3>Tarif Özeti</h3>
+
+                <div class="score-box">
+                    <strong>{{ recipe.score }}%</strong>
+                    <span>Uyum Skoru</span>
+                </div>
+
+                <div class="time-list">
+                    <p><i class="bi bi-alarm"></i> Hazırlık: <b>{{ recipe.prep_time }}</b></p>
+                    <p><i class="bi bi-fire"></i> Pişirme: <b>{{ recipe.cook_time }}</b></p>
+                    <p><i class="bi bi-bookmark"></i> Kategori: <b>{{ recipe.category }}</b></p>
+                </div>
+
+                <div class="side-note">
+                    <i class="bi bi-lightbulb"></i>
+                    <p>{{ recipe.tips }}</p>
+                </div>
+            </aside>
+
+            <main class="main-recipe-content">
+                <div class="recipe-section-card">
+                    <div class="section-title">
+                        <span>01</span>
+                        <div>
+                            <h2>Malzemeler</h2>
+                            <p>Başlamadan önce tüm malzemeleri hazırlayın.</p>
+                        </div>
+                    </div>
+
+                    <div class="ingredient-grid">
+                       {% for ingredient in recipe.ingredient_list %}
+                           <label class="ingredient-item checklist-item">
+                                <input type="checkbox" class="ingredient-checkbox">
+                                <span class="checkmark">
+                                    <i class="bi bi-check2"></i>
+                                </span>
+                                <span class="ingredient-text">
+                                   {{ ingredient }}
+                                </span>
+                            </label>
+                         {% endfor %}
+                    </div>
+                </div>
+
+                <div class="recipe-section-card">
+                    <div class="section-title">
+                        <span>02</span>
+                        <div>
+                            <h2>Hazırlanışı</h2>
+                            <p>Tarifi adım adım takip ederek kolayca hazırlayın.</p>
+                        </div>
+                    </div>
+
+                    <div class="method-list">
+                        {% for step in recipe.step_list %}
+                            <div class="method-step">
+                                <div class="method-number">{{ forloop.counter }}</div>
+                                <p>{{ step }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="double-info">
+                    <div class="info-box green">
+                        <i class="bi bi-lightbulb-fill"></i>
+                        <h4>Püf Noktası</h4>
+                        <p>{{ recipe.tips }}</p>
+                    </div>
+
+                    <div class="info-box">
+                        <i class="bi bi-egg-fried"></i>
+                        <h4>Servis Önerisi</h4>
+                        <p>{{ recipe.serving_suggestion }}</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        {% if similar_recipes %}
+            <div class="similar-section">
+                <div class="similar-header">
+                    <span>Devam Et</span>
+                    <h2>Benzer Tarifler</h2>
+                </div>
+
+                <div class="recipe-grid three">
+                    {% for item in similar_recipes %}
+                        <article class="recipe-card">
+                            <img src="{{ item.image }}" alt="{{ item.title }}">
+                            <div class="recipe-card-body">
+                                <span class="recipe-badge">{{ item.category }}</span>
+                                <div class="recipe-title">{{ item.title }}</div>
+                                <p class="recipe-desc">{{ item.description }}</p>
+
+                                <a href="{% url 'recipe_detail' item.slug %}" class="recipe-btn">
+                                    Detay Gör <i class="bi bi-arrow-right-circle"></i>
+                                </a>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+</section>
+
+<style>
+.recipe-detail-page {
+    min-height: 100vh;
+    padding: 120px 0 70px;
+    background:
+        radial-gradient(circle at top left, rgba(34,197,94,0.10), transparent 35%),
+        linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+}
+
+.premium-hero {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 28px;
+    align-items: stretch;
+}
+
+.premium-hero-image {
+    min-height: 460px;
+    border-radius: 34px;
+    overflow: hidden;
+    box-shadow: 0 22px 60px rgba(15,23,42,0.12);
+}
+
+.premium-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.premium-hero-content {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 34px;
+    padding: 44px;
+    box-shadow: 0 22px 60px rgba(15,23,42,0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.back-link {
+    color: #16a34a;
+    font-weight: 900;
+    text-decoration: none;
+    margin-bottom: 16px;
+}
+
+.premium-badge {
+    width: fit-content;
+    background: #ecfdf5;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-weight: 800;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.premium-hero-content h1 {
+    font-size: 54px;
+    line-height: 1.04;
+    font-weight: 900;
+    color: #0f172a;
+    letter-spacing: -2px;
+    margin-bottom: 16px;
+}
+
+.premium-hero-content p {
+    color: #64748b;
+    font-size: 17px;
+    line-height: 1.75;
+    margin-bottom: 26px;
+}
+
+.quick-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.quick-stats div {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 14px;
+}
+
+.quick-stats i {
+    color: #16a34a;
+    font-size: 20px;
+}
+
+.quick-stats strong {
+    display: block;
+    color: #0f172a;
+    font-size: 16px;
+    margin-top: 6px;
+}
+
+.quick-stats span {
+    display: block;
+    color: #64748b;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.content-layout {
+    display: grid;
+    grid-template-columns: 310px 1fr;
+    gap: 26px;
+    margin-top: 28px;
+    align-items: start;
+}
+
+.side-card {
+    position: sticky;
+    top: 105px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 28px;
+    padding: 26px;
+    box-shadow: 0 18px 45px rgba(15,23,42,0.07);
+}
+
+.side-card h3 {
+    font-weight: 900;
+    margin-bottom: 18px;
+}
+
+.score-box {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #ffffff;
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+.score-box strong {
+    display: block;
+    font-size: 42px;
+    line-height: 1;
+}
+
+.score-box span {
+    font-weight: 700;
+    opacity: 0.9;
+}
+
+.time-list p {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    background: #f8fafc;
+    border-radius: 14px;
+    padding: 12px;
+    color: #334155;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.time-list i {
+    color: #16a34a;
+}
+
+.side-note {
+    margin-top: 18px;
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+    border-radius: 18px;
+    padding: 16px;
+}
+
+.side-note i {
+    font-size: 22px;
+}
+
+.side-note p {
+    margin: 8px 0 0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.main-recipe-content {
+    display: grid;
+    gap: 22px;
+}
+
+.recipe-section-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 28px;
+    padding: 30px;
+    box-shadow: 0 18px 45px rgba(15,23,42,0.07);
+}
+
+.section-title {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.section-title > span {
+    width: 44px;
+    height: 44px;
+    border-radius: 15px;
+    background: #dcfce7;
+    color: #16a34a;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+}
+
+.section-title h2 {
+    margin: 0;
+    font-weight: 900;
+    color: #0f172a;
+}
+
+.section-title p {
+    margin: 4px 0 0;
+    color: #64748b;
+}
+
+.ingredient-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.ingredient-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 14px 16px;
+    color: #334155;
+    font-weight: 700;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: .2s;
+    user-select: none;
+}
+
+.checklist-item:hover {
+    background: #ecfdf5;
+    border-color: #bbf7d0;
+    transform: translateY(-2px);
+}
+
+.ingredient-checkbox {
+    display: none;
+}
+
+.checkmark {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    border-radius: 50%;
+    border: 2px solid #16a34a;
+    color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .2s;
+    font-size: 17px;
+}
+
+.ingredient-checkbox:checked + .checkmark {
+    background: #16a34a;
+    color: #fff;
+}
+
+.ingredient-checkbox:checked + .checkmark + .ingredient-text {
+    color: #94a3b8;
+    text-decoration: line-through;
+}
+
+.method-list {
+    display: grid;
+    gap: 14px;
+}
+
+.method-step {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 18px;
+}
+
+.method-number {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #16a34a;
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+}
+
+.method-step p {
+    margin: 0;
+    color: #334155;
+    line-height: 1.8;
+}
+
+.double-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.info-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 26px;
+    padding: 24px;
+    box-shadow: 0 18px 45px rgba(15,23,42,0.07);
+}
+
+.info-box.green {
+    background: #ecfdf5;
+    border-color: #bbf7d0;
+}
+
+.info-box i {
+    color: #16a34a;
+    font-size: 28px;
+}
+
+.info-box h4 {
+    margin: 12px 0 8px;
+    font-weight: 900;
+}
+
+.info-box p {
+    color: #475569;
+    margin: 0;
+    line-height: 1.7;
+}
+
+.similar-section {
+    margin-top: 42px;
+}
+
+.similar-header span {
+    color: #16a34a;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.similar-header h2 {
+    font-weight: 900;
+    margin: 6px 0 22px;
+}
+
+.recipe-grid.three {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.recipe-card {
+    background: white;
+    border-radius: 26px;
+    overflow: hidden;
+    box-shadow: 0 16px 45px rgba(15,23,42,0.08);
+    transition: 0.3s ease;
+}
+
+.recipe-card:hover {
+    transform: translateY(-6px);
+}
+
+.recipe-card img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+}
+
+.recipe-card-body {
+    padding: 22px;
+}
+
+.recipe-badge {
+    background: #dcfce7;
+    color: #16a34a;
+    padding: 7px 13px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.recipe-title {
+    font-size: 22px;
+    font-weight: 900;
+    margin: 14px 0 8px;
+}
+
+.recipe-desc {
+    color: #64748b;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.recipe-btn {
+    color: #16a34a;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+@media (max-width: 991px) {
+    .premium-hero,
+    .content-layout,
+    .double-info,
+    .recipe-grid.three {
+        grid-template-columns: 1fr;
+    }
+
+    .side-card {
+        position: static;
+    }
+
+    .quick-stats,
+    .ingredient-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .premium-hero-content h1 {
+        font-size: 38px;
+    }
+}
+
+@media (max-width: 576px) {
+    .recipe-detail-page {
+        padding-top: 100px;
+    }
+
+    .quick-stats,
+    .ingredient-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .premium-hero-image {
+        min-height: 300px;
+    }
+}
+</style>
+{% endblock %}

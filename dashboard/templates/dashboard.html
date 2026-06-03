@@ -1,0 +1,469 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ChefAlgo | Panel{% endblock %}
+
+{% block content %}
+<style>
+    .dashboard-page {
+        background: #f8fafc;
+        min-height: 100vh;
+        padding-top: 120px;
+        padding-bottom: 60px;
+        color: #0f172a;
+    }
+
+    .dashboard-layout {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 28px;
+        align-items: start;
+        margin-left: -75px;
+    }
+
+    .category-sidebar, .dashboard-card {
+        background: #fff;
+        border-radius: 24px;
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+    }
+
+    .category-sidebar {
+        position: sticky;
+        top: 190px;
+        padding: 22px;
+    }
+
+    .category-sidebar-title {
+        font-weight: 800;
+        margin-bottom: 18px;
+        color: #0f172a;
+    }
+
+    .category-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .category-menu a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 13px 14px;
+        border-radius: 16px;
+        text-decoration: none;
+        color: #334155;
+        font-weight: 700;
+        background: #f8fafc;
+        transition: .2s;
+    }
+
+    .category-menu a:hover,
+    .category-menu a.active {
+        background: #16a34a;
+        color: #fff;
+        transform: translateX(4px);
+    }
+
+    .category-menu a.ai-category-btn {
+        background: #ecfdf5;
+        color: #15803d;
+        border: 1px solid #bbf7d0;
+        font-weight: 800;
+    }
+
+    .category-menu a.ai-category-btn:hover {
+        background: #16a34a;
+        color: #fff;
+        transform: translateX(4px);
+    }
+
+    .dashboard-card {
+        border: 0;
+    }
+
+    .dashboard-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+    }
+
+    .icon-green { background: #dcfce7; color: #16a34a; }
+    .icon-blue { background: #dbeafe; color: #2563eb; }
+    .icon-purple { background: #ede9fe; color: #7c3aed; }
+
+    .category-dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 8px;
+    }
+
+    .dot-green { background: #16a34a; }
+    .dot-blue { background: #2563eb; }
+    .dot-yellow { background: #eab308; }
+    .dot-orange { background: #f97316; }
+    .dot-red { background: #ef4444; }
+
+    .dashboard-back-btn {
+        border: 1px solid #0f172a;
+        color: #0f172a !important;
+        background: transparent;
+        font-weight: 600;
+    }
+
+    .dashboard-back-btn:hover {
+        background: #0f172a;
+        color: #fff !important;
+    }
+
+    .recipe-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .recipe-card {
+        background: #fff;
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+        transition: .2s;
+        height: 100%;
+    }
+
+    .recipe-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .recipe-image-wrapper {
+        position: relative;
+    }
+
+    .recipe-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
+
+    .favorite-btn {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #ffffff;
+        color: #ef4444;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
+        transition: .2s;
+        font-size: 19px;
+        z-index: 5;
+    }
+
+    .favorite-btn:hover {
+        transform: scale(1.08);
+        color: #dc2626;
+    }
+
+    .favorite-btn.active {
+        background: #ef4444;
+        color: #ffffff;
+    }
+
+    .recipe-card-body {
+        padding: 18px;
+    }
+
+    .recipe-badge {
+        display: inline-block;
+        background: #dcfce7;
+        color: #16a34a;
+        font-weight: 700;
+        border-radius: 999px;
+        padding: 5px 12px;
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+
+    .recipe-title {
+        font-weight: 800;
+        font-size: 20px;
+        margin-bottom: 8px;
+        color: #0f172a;
+    }
+
+    .recipe-desc {
+        color: #64748b;
+        font-size: 14px;
+        min-height: 42px;
+    }
+
+    .recipe-meta {
+        color: #64748b;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    .recipe-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 14px;
+        color: #16a34a;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    .recipe-btn:hover {
+        color: #15803d;
+    }
+
+    .dashboard-page .text-muted {
+        color: #64748b !important;
+    }
+
+    @media (max-width: 991px) {
+        .dashboard-layout {
+            grid-template-columns: 1fr;
+            margin-left: 0;
+        }
+
+        .category-sidebar {
+            position: static;
+        }
+
+        .category-menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .recipe-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .category-menu {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<script>
+    document.body.classList.add("dashboard-page-active");
+</script>
+
+<section class="dashboard-page">
+    <div class="container">
+        <div class="dashboard-layout">
+
+            <aside class="category-sidebar">
+                <h5 class="category-sidebar-title">
+                    <i class="bi bi-grid me-2 text-success"></i>
+                    Kategoriler
+                </h5>
+
+                <div class="category-menu">
+                    {% for category in categories %}
+                        <a href="{% url 'dashboard' %}?category={{ category.name|urlencode }}"
+                           class="{% if selected_category == category.name %}active{% endif %}">
+
+                            {% if category.name == "Çorbalar" %}
+                                <i class="bi bi-cup-hot"></i>
+                            {% elif category.name == "Ana Yemekler" %}
+                                <i class="bi bi-egg-fried"></i>
+                            {% elif category.name == "Tatlılar" %}
+                                <i class="bi bi-cake2"></i>
+                            {% elif category.name == "İçecekler" %}
+                                <i class="bi bi-cup-straw"></i>
+                            {% else %}
+                                <i class="bi bi-basket"></i>
+                            {% endif %}
+
+                            {{ category.name }}
+                        </a>
+                    {% endfor %}
+
+                    <a href="{% url 'ai_page' %}" class="ai-category-btn">
+                        <i class="bi bi-stars"></i>
+                        ChefAlgo AI
+                    </a>
+                </div>
+            </aside>
+
+            <main>
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+                    <div>
+                        <span class="badge bg-success rounded-pill px-3 py-2 mb-3 text-white">
+                            Dashboard
+                        </span>
+
+                        <h1 class="fw-bold mb-2">
+                            ChefAlgo Yönetim Paneli
+                        </h1>
+
+                        <p class="text-muted mb-0">
+                            Tarif, malzeme ve algoritma performansını buradan takip edebilirsiniz.
+                        </p>
+                    </div>
+
+                    <a href="{% url 'home' %}" class="btn dashboard-back-btn rounded-pill px-4 py-2">
+                        <i class="bi bi-arrow-left me-2"></i>
+                        Ana Sayfaya Dön
+                    </a>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-md-4">
+                        <div class="card dashboard-card h-100">
+                            <div class="card-body p-4 d-flex align-items-center gap-4">
+                                <div class="dashboard-icon icon-green">
+                                    <i class="bi bi-journal-bookmark"></i>
+                                </div>
+
+                                <div>
+                                    <div class="text-muted small text-uppercase fw-bold">
+                                        Toplam Tarif
+                                    </div>
+
+                                    <div class="display-6 fw-bold">
+                                        {{ total_recipes }}
+                                    </div>
+
+                                    <div class="text-muted small">
+                                        Tüm tarifleriniz
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card dashboard-card h-100">
+                            <div class="card-body p-4 d-flex align-items-center gap-4">
+                                <div class="dashboard-icon icon-blue">
+                                    <i class="bi bi-box-seam"></i>
+                                </div>
+
+                                <div>
+                                    <div class="text-muted small text-uppercase fw-bold">
+                                        Malzeme
+                                    </div>
+
+                                    <div class="display-6 fw-bold">
+                                        {{ total_ingredients }}
+                                    </div>
+
+                                    <div class="text-muted small">
+                                        Kayıtlı malzeme
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card dashboard-card h-100">
+                            <div class="card-body p-4 d-flex align-items-center gap-4">
+                                <div class="dashboard-icon icon-purple">
+                                    <i class="bi bi-graph-up-arrow"></i>
+                                </div>
+
+                                <div>
+                                    <div class="text-muted small text-uppercase fw-bold">
+                                        Algoritma Skoru
+                                    </div>
+
+                                    <div class="display-6 fw-bold">
+                                        {{ algo_score }}%
+                                    </div>
+
+                                    <div class="text-muted small">
+                                        Ortalama başarı
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card dashboard-card">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4">
+                            {{ page_title }}
+                        </h5>
+
+                        {% if recent_recipes %}
+                            <div class="recipe-grid">
+                                {% for recipe in recent_recipes %}
+                                    <div class="recipe-card">
+                                        <div class="recipe-image-wrapper">
+                                            <img
+                                                src="{{ recipe.image }}"
+                                                alt="{{ recipe.title }}"
+                                                onerror="this.src='https://images.unsplash.com/photo-1495521821757-a1efb6729352?auto=format&fit=crop&w=900&q=80';"
+                                            >
+
+                                            {% if user.is_authenticated %}
+                                                <a href="{% url 'toggle_favorite' recipe.id %}?next={{ request.get_full_path|urlencode }}"
+                                                   class="favorite-btn {% if recipe.id in favorite_recipe_ids %}active{% endif %}"
+                                                   title="Favorilere ekle/kaldır">
+
+                                                    {% if recipe.id in favorite_recipe_ids %}
+                                                        <i class="bi bi-heart-fill"></i>
+                                                    {% else %}
+                                                        <i class="bi bi-heart"></i>
+                                                    {% endif %}
+                                                </a>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="recipe-card-body">
+                                            <span class="recipe-badge">
+                                                {{ recipe.category }}
+                                            </span>
+
+                                            <div class="recipe-title">
+                                                {{ recipe.title }}
+                                            </div>
+
+                                            <p class="recipe-desc">
+                                                {{ recipe.description }}
+                                            </p>
+
+                                            <div class="recipe-meta">
+                                                <i class="bi bi-clock me-1"></i>
+                                                {{ recipe.time }}
+                                            </div>
+
+                                            <a href="{% url 'recipe_detail' recipe.slug %}" class="recipe-btn">
+                                                Detay Gör
+                                                <i class="bi bi-arrow-right-circle"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted">
+                                Bu kategoride henüz tarif yok.
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </main>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChefAlgo | Sisteme Giriş</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0f172a;       
+            --card-dark: #111827;     
+            --chef-green: #10b981;    
+            --chef-blue: #3b82f6;     
+            --link-highlight: #00d1ff; 
+            --input-bg: #1f2937;      
+            --text-main: #ffffff;
+            --text-dim: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .auth-wrapper {
+            display: flex;
+            width: 100%;
+            max-width: 1000px;
+            min-height: 650px;
+            background: var(--card-dark);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin: 20px;
+        }
+
+        .auth-info-side {
+            flex: 1;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .auth-form-side {
+            flex: 1;
+            padding: 60px;
+            background: var(--card-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .brand-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        .brand-logo span { color: var(--chef-green); }
+
+        /* BAŞLIK VE METİN NETLEŞTİRME */
+        .auth-form-side h3 {
+            color: #ffffff !important;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .auth-form-side p.text-white-50 {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        /* Form Elemanları */
+        .django-form-wrapper label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #ffffff !important; /* Tam beyaz etiketler */
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .django-form-wrapper input {
+            width: 100% !important;
+            padding: 14px 18px !important;
+            border-radius: 14px !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.1) !important;
+            background: var(--input-bg) !important;
+            color: white !important;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+            margin-bottom: 20px;
+        }
+
+        .django-form-wrapper input:focus {
+            border-color: var(--chef-blue) !important;
+            background: rgba(255, 255, 255, 0.05) !important;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15) !important;
+        }
+
+        .btn-login-master {
+            background: var(--chef-blue);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 14px;
+            font-weight: 700;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-login-master:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+            box-shadow: 0 15px 30px -10px rgba(59, 130, 246, 0.4);
+        }
+
+        .auth-footer {
+            margin-top: 35px;
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .auth-footer p {
+            color: #ffffff !important; /* Alt metin beyaz */
+        }
+
+        .register-link {
+            color: var(--link-highlight) !important;
+            font-weight: 700;
+            text-decoration: none;
+            margin-left: 5px;
+            transition: 0.2s;
+        }
+        .register-link:hover { color: white; text-decoration: underline; }
+
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 100px;
+            color: var(--chef-green);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 850px) {
+            .auth-info-side { display: none; }
+            .auth-wrapper { max-width: 450px; }
+            .auth-form-side { padding: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="auth-wrapper">
+    <div class="auth-info-side">
+        <div class="brand-logo">Chef<span>Algo</span></div>
+        <h2 class="fw-bold text-white mb-3">Tekrar Hoş Geldiniz</h2>
+        <p class="text-white mb-4" style="opacity: 0.85;">Mutfak algoritmanızı yönetmek ve israfı önlemek için oturum açın.</p>
+        
+        <div class="mt-4">
+            <div class="d-flex align-items-center mb-3">
+                <i class="bi bi-check2-circle text-success me-2"></i>
+                <span class="small text-white" style="opacity: 0.8;">Kişiselleştirilmiş Reçeteler</span>
+            </div>
+            <div class="d-flex align-items-center mb-3">
+                <i class="bi bi-check2-circle text-success me-2"></i>
+                <span class="small text-white" style="opacity: 0.8;">Dinamik Stok Takibi</span>
+            </div>
+            <div class="d-flex align-items-center">
+                <i class="bi bi-check2-circle text-success me-2"></i>
+                <span class="small text-white" style="opacity: 0.8;">Yapay Zeka Destekli Analiz</span>
+            </div>
+        </div>
+
+        <div class="security-badge">
+            <i class="bi bi-shield-lock-fill me-2"></i> 256-bit Güvenli Bağlantı
+        </div>
+    </div>
+
+    <div class="auth-form-side">
+        <div class="mb-5">
+            <h3 class="fw-bold mb-1">Giriş Yap</h3>
+            <p class="small" style="color: rgba(255, 255, 255, 0.7);">Lütfen hesap bilgilerinizi giriniz.</p>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="django-form-wrapper">
+                {% for field in form %}
+                    <div class="mb-1">
+                        <label>{{ field.label }}</label>
+                        {{ field }}
+                        {% for error in field.errors %}
+                            <div class="text-danger small mt-n3 mb-3" style="font-weight: 600; font-size: 0.75rem;">
+                                <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger bg-danger bg-opacity-10 border-0 text-danger small py-2 mb-4" style="font-weight: 600;">
+                    {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="btn-login-master">
+                Sisteme Bağlan <i class="bi bi-box-arrow-in-right ms-2"></i>
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <p class="mb-0">
+                Henüz bir hesabınız yok mu? 
+                <a href="{% url 'register' %}" class="register-link">Hemen Kaydolun</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

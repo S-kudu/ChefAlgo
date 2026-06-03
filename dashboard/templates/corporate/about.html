@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}Hakkımızda | ChefAlgo{% endblock %}
+{% block body_class %}dashboard-page-active{% endblock %}
+
+{% block content %}
+{% include 'corporate/_corporate_styles.html' %}
+
+<section class="corp-page">
+    <div class="container corp-container">
+
+        <div class="corp-hero">
+            <div class="corp-hero-left">
+                <span class="corp-badge">
+                    <i class="bi bi-info-circle"></i>
+                    Hakkımızda
+                </span>
+
+                <h1>ChefAlgo Nedir?</h1>
+
+                <p>
+                    ChefAlgo, yemek tariflerini daha düzenli, hızlı ve akıllı hale getirmek için geliştirilmiş
+                    bir karar destek sistemidir. Kullanıcılar tarifleri kategorilere göre inceleyebilir,
+                    favorilerine ekleyebilir ve elindeki malzemelere göre en uygun tarifleri bulabilir.
+                </p>
+
+                <div class="corp-actions">
+                    <a href="{% url 'dashboard' %}" class="corp-btn corp-btn-primary">
+                        <i class="bi bi-grid"></i>
+                        Panele Git
+                    </a>
+
+                    <a href="{% url 'ai_page' %}" class="corp-btn corp-btn-secondary">
+                        <i class="bi bi-stars"></i>
+                        ChefAlgo AI
+                    </a>
+                </div>
+            </div>
+
+            <div class="corp-hero-right">
+                <div class="corp-main-icon">
+                    <i class="bi bi-cpu"></i>
+                </div>
+
+                <h3>Karar Destek Sistemi</h3>
+
+                <p>
+                    Tarifleri, malzemeleri ve kullanıcı tercihlerini tek sistemde birleştirir.
+                </p>
+            </div>
+        </div>
+
+        <div class="corp-section">
+            <div class="corp-section-header">
+                <span>ChefAlgo Özellikleri</span>
+                <h2>Sistemin temel yapısı</h2>
+            </div>
+
+            <div class="corp-card-grid three">
+                <div class="corp-card">
+                    <div class="corp-card-icon">
+                        <i class="bi bi-grid"></i>
+                    </div>
+
+                    <h4>Kategorili Tarifler</h4>
+
+                    <p>
+                        Tarifler çorba, ana yemek, tatlı, içecek ve tuzlu yiyecekler gibi kategorilere ayrılır.
+                        Böylece kullanıcı aradığı tarife daha düzenli şekilde ulaşabilir.
+                    </p>
+                </div>
+
+                <div class="corp-card">
+                    <div class="corp-card-icon">
+                        <i class="bi bi-stars"></i>
+                    </div>
+
+                    <h4>ChefAlgo AI</h4>
+
+                    <p>
+                        Kullanıcının yazdığı malzemeleri analiz eder ve sistemdeki tarifleri uyum yüzdesine göre
+                        listeler. Bu sayede eldeki malzemelerle tarif bulmak kolaylaşır.
+                    </p>
+                </div>
+
+                <div class="corp-card">
+                    <div class="corp-card-icon">
+                        <i class="bi bi-heart"></i>
+                    </div>
+
+                    <h4>Favori Sistemi</h4>
+
+                    <p>
+                        Kullanıcı beğendiği tarifleri hesabına özel olarak favorilerine ekleyebilir ve daha sonra
+                        hızlıca tekrar görüntüleyebilir.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

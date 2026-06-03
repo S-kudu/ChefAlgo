@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}API Referansı | ChefAlgo{% endblock %}
+{% block body_class %}dashboard-page-active{% endblock %}
+
+{% block content %}
+{% include 'corporate/_corporate_styles.html' %}
+
+<section class="corp-page">
+    <div class="container corp-container">
+
+        <div class="corp-hero">
+            <div class="corp-hero-left">
+                <span class="corp-badge">
+                    <i class="bi bi-code-slash"></i>
+                    API Referansı
+                </span>
+
+                <h1>Sistem Fonksiyonları</h1>
+
+                <p>
+                    ChefAlgo dışarıya açık bir API sunmasa da Django view fonksiyonları üzerinden veri işleme,
+                    sayfa yönlendirme, favori yönetimi ve AI öneri mantığını çalıştırır.
+                </p>
+            </div>
+
+            <div class="corp-hero-right">
+                <div class="corp-main-icon">
+                    <i class="bi bi-braces"></i>
+                </div>
+
+                <h3>Django View Yapısı</h3>
+
+                <p>
+                    Her sayfa kendi view fonksiyonuyla kontrol edilir ve template ile kullanıcıya sunulur.
+                </p>
+            </div>
+        </div>
+
+        <div class="corp-section">
+            <div class="corp-section-header">
+                <span>API Referansı</span>
+                <h2>Temel View Fonksiyonları</h2>
+            </div>
+
+            <div class="corp-card-grid four">
+                <div class="corp-card">
+                    <div class="corp-card-number">01</div>
+                    <div class="corp-card-icon">
+                        <i class="bi bi-speedometer2"></i>
+                    </div>
+
+                    <h4>dashboard</h4>
+
+                    <p>
+                        Kategorileri, tarifleri, toplam tarif sayısını ve favori durumlarını hazırlar.
+                    </p>
+                </div>
+
+                <div class="corp-card">
+                    <div class="corp-card-number">02</div>
+                    <div class="corp-card-icon">
+                        <i class="bi bi-stars"></i>
+                    </div>
+
+                    <h4>ai_page</h4>
+
+                    <p>
+                        Girilen malzemeleri tariflerin malzeme listesiyle karşılaştırır ve uyum yüzdesi üretir.
+                    </p>
+                </div>
+
+                <div class="corp-card">
+                    <div class="corp-card-number">03</div>
+                    <div class="corp-card-icon">
+                        <i class="bi bi-heart"></i>
+                    </div>
+
+                    <h4>toggle_favorite</h4>
+
+                    <p>
+                        Kullanıcının seçtiği tarifi favorilere ekler veya favorilerden kaldırır.
+                    </p>
+                </div>
+
+                <div class="corp-card">
+                    <div class="corp-card-number">04</div>
+                    <div class="corp-card-icon">
+                        <i class="bi bi-journal-text"></i>
+                    </div>
+
+                    <h4>recipe_detail</h4>
+
+                    <p>
+                        Seçilen tarifin detaylarını, malzemelerini ve hazırlanış adımlarını gösterir.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

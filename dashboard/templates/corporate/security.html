@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Güvenlik | ChefAlgo{% endblock %}
+{% block body_class %}dashboard-page-active{% endblock %}
+
+{% block content %}
+{% include 'corporate/_corporate_styles.html' %}
+
+<section class="corp-page">
+    <div class="container corp-container">
+
+        <div class="corp-hero">
+            <div class="corp-hero-left">
+                <span class="corp-badge">
+                    <i class="bi bi-shield-check"></i>
+                    Güvenlik
+                </span>
+
+                <h1>Güvenlik Yaklaşımı</h1>
+
+                <p>
+                    ChefAlgo’da kullanıcıya özel işlemler Django’nun oturum sistemiyle korunur.
+                    Favori tarifler, hesap doğrulama ve kullanıcı işlemleri güvenli bir yapı üzerinden yönetilir.
+                </p>
+            </div>
+
+            <div class="corp-hero-right">
+                <div class="corp-main-icon">
+                    <i class="bi bi-person-lock"></i>
+                </div>
+
+                <h3>Kullanıcı Bazlı Koruma</h3>
+
+                <p>
+                    Kullanıcının favorileri ve hesap işlemleri yalnızca kendi oturumu üzerinden görüntülenir.
+                </p>
+            </div>
+        </div>
+
+        <div class="corp-section">
+            <div class="corp-section-header">
+                <span>Güvenlik</span>
+                <h2>Kullanıcı güvenliği ve veri koruma</h2>
+            </div>
+
+            <div class="corp-card-grid three">
+                <div class="corp-card">
+                    <div class="corp-card-icon">
+                        <i class="bi bi-person-check"></i>
+                    </div>
+
+                    <h4>Oturum Kontrolü</h4>
+
+                    <p>
+                        Favori ekleme, favorileri görüntüleme ve kullanıcıya özel işlemler yalnızca giriş yapan
+                        kullanıcılar için aktif şekilde çalışır.
+                    </p>
+                </div>
+
+                <div class="corp-card">
+                    <div class="corp-card-icon">
+                        <i class="bi bi-database-check"></i>
+                    </div>
+
+                    <h4>Veri Düzeni</h4>
+
+                    <p>
+                        Tarif, kategori ve favori ilişkileri Django modelleriyle düzenli şekilde saklanır.
+                        Böylece her kullanıcının verisi ayrı tutulur.
+                    </p>
+                </div>
+
+                <div class="corp-card">
+                    <div class="corp-card-icon">
+                        <i class="bi bi-envelope-check"></i>
+                    </div>
+
+                    <h4>E-posta Doğrulama</h4>
+
+                    <p>
+                        Kayıt olan kullanıcıya doğrulama kodu gönderilir. Kullanıcı kodu doğruladıktan sonra
+                        hesabı aktif hale gelir ve sisteme giriş yapabilir.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

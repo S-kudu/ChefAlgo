@@ -1,0 +1,191 @@
+<footer class="pt-5 pb-3">
+    <div class="container">
+        <div class="row g-5">
+
+            <!-- Sol Alan: Marka Açıklaması -->
+            <div class="col-lg-4 col-md-12 text-center text-lg-start">
+                <a href="{% url 'home' %}" class="footer-brand mb-3 d-inline-block">
+                    Chef<span>Algo</span>
+                </a>
+
+                <p class="pe-lg-5 mb-4" style="line-height: 1.8; color: #94a3b8;">
+                    Gıda israfını önlemek ve veriyi en lezzetli çıktıya dönüştürmek için tasarlanmış profesyonel
+                    <strong>Karar Destek Sistemi (DSS)</strong>. Gastronomi dünyasını algoritmalarla yönetin.
+                </p>
+
+                <div class="d-flex justify-content-center justify-content-lg-start gap-3">
+                    <a href="https://github.com/"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="social-btn"
+                       aria-label="Github">
+                        <i class="bi bi-github"></i>
+                    </a>
+
+                    <a href="https://www.linkedin.com/"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="social-btn"
+                       aria-label="LinkedIn">
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+
+                    <a href="https://x.com/"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="social-btn"
+                       aria-label="X">
+                        <i class="bi bi-twitter-x"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Teknoloji Linkleri -->
+            <div class="col-lg-2 col-6">
+                <h5 class="footer-title text-white fw-bold mb-4">
+                    Teknoloji
+                </h5>
+
+                <ul class="footer-links list-unstyled">
+                    <li>
+                        <a href="https://www.python.org/"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <i class="bi bi-code-slash me-2"></i>
+                            Python
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.djangoproject.com/"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <i class="bi bi-braces me-2"></i>
+                            Django
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.postgresql.org/"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <i class="bi bi-database me-2"></i>
+                            PostgreSQL
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <i class="bi bi-robot me-2"></i>
+                            BeautifulSoup 4
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.chartjs.org/"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <i class="bi bi-graph-up me-2"></i>
+                            Chart.js
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Kurumsal Linkler -->
+            <div class="col-lg-2 col-6">
+                <h5 class="footer-title text-white fw-bold mb-4">
+                    Kurumsal
+                </h5>
+
+                <ul class="footer-links list-unstyled">
+                    <li>
+                        <a href="{% url 'about_page' %}">
+                            <i class="bi bi-info-circle me-2"></i>
+                            Hakkımızda
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'documentation_page' %}">
+                            <i class="bi bi-file-earmark-text me-2"></i>
+                            Dokümantasyon
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'api_reference_page' %}">
+                            <i class="bi bi-code-square me-2"></i>
+                            API Referansı
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'security_page' %}">
+                            <i class="bi bi-shield-check me-2"></i>
+                            Güvenlik
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Algoritma Bülteni -->
+            <div class="col-lg-4 col-md-12">
+                <h5 class="footer-title text-white fw-bold mb-4">
+                    Algoritma Bülteni
+                </h5>
+
+                <p class="mb-4 small" style="color: #94a3b8;">
+                    En yeni veri setleri ve mutfak optimizasyonlarından anında haberdar olun.
+                </p>
+
+                <div class="newsletter-box">
+                    <form action="{% url 'newsletter_entry' %}" method="POST">
+                        {% csrf_token %}
+
+                        <div class="input-group">
+                            <input type="email"
+                                   name="email"
+                                   required
+                                   class="form-control bg-dark border-secondary text-white py-2 ps-3"
+                                   style="font-size: 0.85rem; border-radius: 100px 0 0 100px;"
+                                   placeholder="Gmail adresiniz">
+
+                            <button type="submit"
+                                    class="btn btn-primary px-4"
+                                    style="border-radius: 0 100px 100px 0; font-weight: 600; font-size: 0.85rem;">
+                                Kaydol
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="mt-3">
+                    <small class="text-success" style="font-size: 0.7rem;">
+                        <i class="bi bi-shield-check me-1"></i>
+                        Verileriniz güvenli şekilde korunmaktadır.
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alt Footer -->
+        <div class="footer-bottom mt-5 pt-4 border-top border-secondary text-center">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-md-start mb-3 mb-md-0">
+                    <p class="mb-0 opacity-50" style="font-size: 0.8rem;">
+                        &copy; 2026 <strong>ChefAlgo</strong> Decision Systems. Tüm hakları saklıdır.
+                    </p>
+                </div>
+
+                <div class="col-md-6 text-md-end">
+                    <span class="badge bg-secondary opacity-50 fw-light p-2" style="font-size: 0.75rem;">
+                        Bilgisayar Programcılığı | Bitirme Projesi v2.0
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
