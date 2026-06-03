@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- İstatistikler -->
+<section class="stats-overview">…</section>
+
+<section class="categories">
+    <h2>Kategoriler</h2>
+    <div class="category-grid">
+        {% for cat in categories %}
+        <div class="category-card {{ cat.color }}">
+            <i class="bi {{ cat.icon }}"></i>
+            <span>{{ cat.name }} ({{ cat.count }})</span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+<!-- Kategoriler -->
+<section class="categories">…</section>
+
+<section class="stats-overview">
+    <h2>Genel İstatistikler</h2>
+    <ul>
+        <li>Toplam Tarif: {{ stats.total_recipes }}</li>
+        <li>Toplam Malzeme: {{ stats.total_ingredients }}</li>
+        <li>Algoritma Başarı Oranı: {{ stats.algo_score }}%</li>
+    </ul>
+</section>
+
+<!-- Tarifler -->
+<div class="recipes-grid">
+    {% for recipe in recipes %}
+    <div class="recipe-card">
+        <a href="{% url 'dashboard:recipe_detail' recipe.id %}">
+            <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+        </a>
+        <div class="recipe-content">
+            <h3>{{ recipe.title }}</h3>
+            <p>{{ recipe.description|truncatechars:60 }}</p>
+            <div class="recipe-info">
+                <span>⏱ {{ recipe.prep_time }} dk</span>
+                <span>🔥 {{ recipe.calories }} kcal</span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Son Aktiviteler -->
+<section class="recent-activity">…</section>
+
+<section class="recent-activity">
+    <h2>Son Aktiviteler</h2>
+    <ul>
+        {% for r in recent_recipes %}
+        <li>
+            <strong>{{ r.title }}</strong> – {{ r.time }} ({{ r.status }})
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+
+
+{% endblock %}

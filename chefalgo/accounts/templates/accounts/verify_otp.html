@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChefAlgo | Hesabı Doğrula</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0f172a;       
+            --card-dark: #111827;     
+            --chef-green: #10b981;    
+            --chef-blue: #3b82f6;     
+            --input-bg: #1f2937;      
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Mesaj Konumlandırma */
+        .messages-container {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 9999;
+            min-width: 320px;
+            pointer-events: none; /* Altındaki butonlara tıklamayı engellemez */
+        }
+        
+        .messages-container > * {
+            pointer-events: auto;
+            animation: slideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .auth-wrapper {
+            display: flex;
+            width: 100%;
+            max-width: 1000px;
+            min-height: 650px;
+            background: var(--card-dark);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin: 20px;
+        }
+
+        .auth-info-side {
+            flex: 1;
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.12) 0%, rgba(15, 23, 42, 1) 100%);
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .auth-form-side {
+            flex: 1;
+            padding: 60px;
+            background: var(--card-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .brand-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        .brand-logo span { color: var(--chef-green); }
+
+        .form-group input {
+            width: 100%;
+            padding: 20px 10px;
+            border-radius: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: var(--input-bg);
+            color: white;
+            font-size: 2.2rem;
+            letter-spacing: 12px;
+            text-indent: 12px; /* Yazıyı tam ortalamak için */
+            text-align: center;
+            font-weight: 800;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: var(--chef-green);
+            background: rgba(16, 185, 129, 0.05);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+            outline: none;
+        }
+
+        .btn-verify-master {
+            background: var(--chef-green);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            width: 100%;
+            margin-top: 10px;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-verify-master:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+            box-shadow: 0 15px 30px -10px rgba(16, 185, 129, 0.4);
+        }
+
+        .auth-footer {
+            margin-top: 30px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .resend-text {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .resend-link {
+            color: var(--chef-green);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        
+        .resend-link:hover { text-decoration: underline; }
+
+        @media (max-width: 850px) {
+            .auth-info-side { display: none; }
+            .auth-wrapper { max-width: 450px; }
+            .auth-form-side { padding: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="messages-container">
+    {% include '_messages.html' %}
+</div>
+
+<div class="auth-wrapper">
+    <div class="auth-info-side">
+        <div class="brand-logo">Chef<span>Algo</span></div>
+        <h2 class="fw-bold text-white mb-3">Güvenlik Kontrolü</h2>
+        <p class="text-white mb-5" style="opacity: 0.8; font-size: 1rem; line-height: 1.6;">Hesabınızı aktifleştirmek için e-postanıza gönderilen 6 haneli kodu doğrulamanız gerekmektedir.</p>
+        
+        <div class="features">
+            <div class="d-flex align-items-center mb-4">
+                <div class="p-2 bg-success bg-opacity-10 rounded-3 me-3">
+                    <i class="bi bi-shield-lock text-success fs-4"></i>
+                </div>
+                <span class="text-white-50">Güvenli oturum yönetimi</span>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="p-2 bg-success bg-opacity-10 rounded-3 me-3">
+                    <i class="bi bi-lightning-charge text-success fs-4"></i>
+                </div>
+                <span class="text-white-50">Anında aktivasyon</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="auth-form-side">
+        <div class="mb-5 text-center">
+            <h3 class="fw-bold mb-2">Kodu Giriniz</h3>
+            <p class="text-muted small">6 haneli doğrulama kodunu aşağıya yazın.</p>
+        </div>
+
+        <form method="POST" id="otpForm">
+            {% csrf_token %}
+            
+            <div class="form-group mb-4">
+                <input type="text" 
+                       id="otp_code" 
+                       name="otp_code" 
+                       maxlength="6" 
+                       pattern="\d{6}"
+                       inputmode="numeric"
+                       autocomplete="one-time-code" 
+                       required 
+                       placeholder="000000"
+                       autofocus>
+            </div>
+
+            <button type="submit" class="btn-verify-master">
+                Doğrula ve Başla <i class="bi bi-arrow-right-circle fs-5"></i>
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <span class="resend-text">Kodu almadınız mı? 
+                <a href="#" class="resend-link">Yeniden Gönder</a>
+            </span>
+            <a href="{% url 'accounts:register' %}" class="text-white-50 text-decoration-none small">
+                <i class="bi bi-chevron-left"></i> Kayıt ekranına dön
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Sadece rakam girişine izin veren ve otomatik submit desteği sunan script
+    const otpInput = document.getElementById('otp_code');
+
+    otpInput.addEventListener('input', function(e) {
+        // Rakam dışındaki her şeyi temizle
+        this.value = this.value.replace(/[^0-9]/g, '');
+        
+        // 6 haneye ulaştığında kutunun rengini değiştirerek geri bildirim ver
+        if (this.value.length === 6) {
+            this.style.borderColor = '#10b981';
+        } else {
+            this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+        }
+    });
+
+    // Sayfa yüklendiğinde mesajların 5 saniye sonra kaybolması (opsiyonel)
+    setTimeout(() => {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            alert.style.transition = "0.5s";
+            alert.style.opacity = "0";
+            setTimeout(() => alert.remove(), 500);
+        });
+    }, 5000);
+</script>
+
+</body>
+</html>

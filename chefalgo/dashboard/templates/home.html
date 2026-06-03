@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-4" style="position: absolute; top: 80px; left: 50%; transform: translateX(-50%); z-index: 1050;">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-dismissible fade show shadow-lg border-0 rounded-4 {% if message.tags == 'success' or 'login-success' in message.tags %}bg-success text-white{% else %}bg-dark text-white{% endif %}" role="alert" style="backdrop-filter: blur(10px); background-opacity: 0.9;">
+                <div class="d-flex align-items-center">
+                    <i class="bi {% if message.tags == 'success' or 'login-success' in message.tags %}bi-check2-circle{% else %}bi-info-circle{% endif %} fs-4 me-3"></i>
+                    <div>
+                        {{ message }}
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<section class="hero">
+    <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+        <div class="hero-badge">
+            <i class="bi bi-stars me-2"></i>AI-Powered Decision Support
+        </div>
+        <h1 class="hero-title">Veriden Lezzete <br>Kusursuz Köprü.</h1>
+        <p class="hero-desc">Mutfaktaki malzemelerinizi birer veri girdisine dönüştürün. Gelişmiş ChefAlgo algoritmalarıyla israfı sıfırlayın ve en optimize tarif rotasına ulaşın.</p>
+        
+        <div class="search-wrapper">
+            <i class="bi bi-search ms-4 text-white-50"></i>
+            <input type="text" placeholder="Elinizde ne var? (Tavuk, Mantar, Krema...)">
+            <button class="btn-search">Analiz Et</button>
+        </div>
+        
+        <div class="hero-stats-mini mt-5 d-flex justify-content-center gap-4 opacity-75">
+            <small><i class="bi bi-check-circle-fill me-2 text-primary"></i>5000+ Veri Seti</small>
+            <small><i class="bi bi-check-circle-fill me-2 text-primary"></i>%99 Doğruluk</small>
+            <small><i class="bi bi-check-circle-fill me-2 text-primary"></i>Sıfır Atık Politikası</small>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-white border-bottom">
+    <div class="container">
+        <div class="row text-center g-4">
+            <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="100">
+                <h3 class="fw-bold mb-0 text-dark">1.2M+</h3>
+                <p class="text-muted small text-uppercase fw-bold">Taranan Tarif</p>
+            </div>
+            <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="200">
+                <h3 class="fw-bold mb-0 text-dark">500+</h3>
+                <p class="text-muted small text-uppercase fw-bold">Malzeme Tanımı</p>
+            </div>
+            <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="300">
+                <h3 class="fw-bold mb-0 text-dark">ms</h3>
+                <p class="text-muted small text-uppercase fw-bold">İşlem Hızı</p>
+            </div>
+            <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="400">
+                <h3 class="fw-bold mb-0 text-dark">∞</h3>
+                <p class="text-muted small text-uppercase fw-bold">Kreatif Kombinasyon</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="container text-center">
+        <span class="feature-tag" data-aos="fade-down">Core Engine</span>
+        <h2 class="feature-main-title" data-aos="fade-up">Algoritmik Mutfak Yönetimi</h2>
+
+        <div class="row g-4 text-start mt-4">
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-stack"></i></div>
+                    <h4>Many-to-Many</h4>
+                    <p>İlişkisel veritabanı mimarisi ile her malzeme ve her tarif arasında dinamik, ölçeklenebilir ve yüksek hızlı bir ağ kurar. Karmaşık veri setlerini saniyeler içinde işler.</p>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-cpu"></i></div>
+                    <h4>N-1 Optimizasyonu</h4>
+                    <p>Sadece tam eşleşmeleri değil, eksik malzemeye göre en yakın tarifleri maliyet ve bulunabilirlik odaklı sıralar. Elinizdekilerle yapabileceğiniz en iyi "B Planını" sunar.</p>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-search-heart"></i></div>
+                    <h4>Data Scraping</h4>
+                    <p>Python tabanlı otonom botlar ile küresel gastronomi ağındaki binlerce tarifi sürekli tarayarak veritabanına entegre eder. Trendleri sizin yerinize takip eder.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 mb-5">
+    <div class="container">
+        <div class="p-5 bg-dark rounded-5 text-center text-white shadow-lg" data-aos="zoom-out">
+            <h2 class="display-6 fw-bold mb-4">Veriyi Lezzete Dönüştürmeye Hazır Mısınız?</h2>
+            <p class="lead text-white-50 mb-4">ChefAlgo'nun gelişmiş karar destek sistemine hemen göz atın.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'accounts:login' %}" class="btn btn-success btn-lg px-5 rounded-pill fw-bold">Giriş Yap</a>
+                <a href="{% url 'accounts:register' %}" class="btn btn-outline-light btn-lg px-5 rounded-pill fw-bold">Kaydol</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
